@@ -1,5 +1,7 @@
 const STORAGE_KEY = 'akzoz_store_reviews';
 
+const DEFAULT_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394A3B8'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-3.8-1.04-4.84-2.61.03-1.6 3.22-2.48 4.84-2.48 1.61 0 4.81.88 4.84 2.48C15.8 18.96 14.03 20 12 20z'/%3E%3C/svg%3E";
+
 const initialReviews = [
   {
     id: 1,
@@ -7,9 +9,10 @@ const initialReviews = [
     stars: 5,
     title: "تجربة ممتازة جداً",
     body: "الخدمة كانت سريعة والمنتج بجودة عالية، ننصح بالتعامل معهم.",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500",
     date: "2026-08-15",
     is_verified: true,
-    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
+    avatar: DEFAULT_AVATAR,
     replies: [
       {
         id: 101,
@@ -26,9 +29,10 @@ const initialReviews = [
     stars: 5,
     title: "سرعة في التوصيل",
     body: "وصل الطلب في وقت قياسي والتعامل كان راقي.",
+    image: null,
     date: "2026-08-20",
     is_verified: true,
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
+    avatar: DEFAULT_AVATAR,
     replies: []
   }
 ];
