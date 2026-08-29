@@ -1,127 +1,93 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
-
 :root {
   --brand: #4E9FE5;
-  --brand-dark: #2B78C2;
-  --brand-light: #F0F7FF;
-  --brand-border: #C8E1F8;
-  --bg: #F8FAFC;
+  --brand-dark: #2563EB;
+  --brand-light: #EFF6FF;
+  --brand-border: #BFDBFE;
   --card-bg: #FFFFFF;
   --text-dark: #0F172A;
   --text-body: #334155;
   --text-muted: #64748B;
   --border: #E2E8F0;
-  --danger: #EF4444;
-  --danger-light: #FEF2F2;
-  --radius-xl: 1.25rem;
-  --radius-lg: 1rem;
-  --radius-md: 0.75rem;
-  --shadow-subtle: 0 10px 30px -5px rgba(15, 23, 42, 0.05);
-  --shadow-hover: 0 20px 35px -10px rgba(78, 159, 229, 0.15);
-  --shadow-pop: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+  --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
 }
-
-* { box-sizing: border-box; }
 
 body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #F8FAFC;
+  color: var(--text-body);
   margin: 0;
-  font-family: 'Cairo', sans-serif;
-  background-color: var(--bg);
-  background-image: radial-gradient(#CBD5E1 0.75px, transparent 0.75px);
-  background-size: 20px 20px;
-  color: var(--text-dark);
-  -webkit-font-smoothing: antialiased;
+  padding: 0;
   direction: rtl;
-  min-height: 100vh;
 }
-
-button { font-family: 'Cairo', sans-serif; cursor: pointer; border: none; }
-input, textarea, select { font-family: 'Cairo', sans-serif; }
 
 .store-brand-title {
-  font-size: 2.2rem;
+  font-size: 1.2rem;
   font-weight: 900;
   color: var(--brand-dark);
-  text-align: center;
+  letter-spacing: 1px;
   margin-bottom: 0.5rem;
 }
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  padding: 0.85rem 1.8rem;
-  border-radius: var(--radius-md);
-  font-weight: 700;
-  font-size: 0.95rem;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #4E9FE5 0%, #3B82C4 100%);
-  color: #fff;
-  box-shadow: 0 8px 20px -4px rgba(78, 159, 229, 0.45);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px -4px rgba(78, 159, 229, 0.55);
-}
-
-.btn-ghost {
-  background: #fff;
-  color: var(--text-body);
-  border: 1.5px solid var(--border);
-}
-
-.btn-ghost:hover {
-  border-color: var(--brand);
-  color: var(--brand);
-  background: var(--brand-light);
-}
-
-.btn-danger {
-  background: var(--danger-light);
-  color: var(--danger);
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
-  border-radius: var(--radius-md);
-  font-weight: 700;
-}
-
-.btn-danger:hover { background: var(--danger); color: #fff; }
 
 .verified-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  background: var(--brand-light);
-  color: var(--brand-dark);
-  border: 1px solid var(--brand-border);
-  font-size: 0.72rem;
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  color: #059669;
+  background: #ECFDF5;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
   font-weight: 700;
-  padding: 0.2rem 0.65rem;
-  border-radius: 999px;
 }
 
-/* Replies Container */
+/* شارة الأدمن المتوهجة */
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  margin-right: 0.4rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.7);
+  animation: adminGlow 1.8s infinite alternate ease-in-out;
+}
+
+@keyframes adminGlow {
+  0% {
+    box-shadow: 0 0 4px rgba(37, 99, 235, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.95), 0 0 18px rgba(59, 130, 246, 0.5);
+  }
+}
+
 .replies-list {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.5rem;
   margin-top: 0.5rem;
 }
 
 .reply-item {
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 0.8rem;
   border-radius: var(--radius-md);
-  font-size: 0.88rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
 .reply-item.admin-type {
   background: var(--brand-light);
-  border-right: 3px solid var(--brand);
+  border-right: 3px solid var(--brand-dark);
 }
 
 .reply-item.user-type {
@@ -132,128 +98,135 @@ input, textarea, select { font-family: 'Cairo', sans-serif; }
 .reply-header {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-weight: 800;
-  margin-bottom: 0.25rem;
+  gap: 0.4rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  font-size: 0.8rem;
 }
 
 .reply-header img {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.reply-btn {
-  background: transparent;
-  color: var(--brand);
-  font-size: 0.85rem;
-  font-weight: 700;
-  padding: 0.3rem 0.6rem;
+.review-attached-img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
   border-radius: var(--radius-md);
   margin-top: 0.5rem;
+}
+
+.btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  border-radius: var(--radius-lg);
+  border: none;
   cursor: pointer;
-  align-self: flex-start;
+  transition: all 0.2s;
+  font-size: 0.95rem;
 }
-.reply-btn:hover { background: var(--brand-light); }
+
+.btn-primary { background: var(--brand); color: #fff; }
+.btn-primary:hover { background: var(--brand-dark); }
+.btn-danger { background: #EF4444; color: #fff; }
+.btn-danger:hover { background: #DC2626; }
+.btn-ghost { background: transparent; color: var(--text-muted); }
+
+.reply-btn {
+  background: none;
+  border: none;
+  color: var(--brand);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0;
+  margin-top: 0.3rem;
+}
 
 .customer-reply-form {
-  margin-top: 0.5rem;
   display: none;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
 }
+
 .customer-reply-form.show { display: flex; }
+
 .customer-reply-form input {
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.85rem;
-  border: 1.5px solid var(--border);
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  outline: none;
+  font-size: 0.85rem;
 }
 
 .modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(4px);
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease;
   padding: 1rem;
 }
-.modal-overlay.show { opacity: 1; pointer-events: auto; }
+
+.modal-overlay.show { display: flex; }
 
 .modal-box {
-  background: var(--card-bg);
+  background: #fff;
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-pop);
   width: 100%;
-  max-width: 500px;
-  padding: 2rem;
-  transform: scale(0.95);
-  transition: transform 0.25s ease;
+  max-width: 480px;
+  padding: 1.75rem;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
 }
-.modal-overlay.show .modal-box { transform: scale(1); }
+
+.field { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+.field label { font-size: 0.85rem; font-weight: 700; }
+.field input, .field textarea {
+  padding: 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  outline: none;
+}
+.field textarea { resize: vertical; min-height: 80px; }
 
 .toast {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 2000;
-  background: var(--text-dark);
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: #1E293B;
   color: #fff;
-  padding: 1rem 1.4rem;
+  padding: 0.75rem 1.25rem;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-pop);
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  max-width: 360px;
-  font-weight: 600;
+  gap: 0.6rem;
+  box-shadow: var(--shadow-hover);
+  transform: translateY(150%);
+  transition: transform 0.3s ease;
+  z-index: 2000;
   font-size: 0.9rem;
-  transform: translateY(30px);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-  border-right: 4px solid var(--brand);
 }
-.toast.show { transform: translateY(0); opacity: 1; }
 
-.field { margin-bottom: 1.2rem; }
-.field label { display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 0.4rem; color: var(--text-dark); }
-.field input, .field textarea, .field select {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-md);
-  font-size: 0.92rem;
-  background: #F8FAFC;
-  outline: none;
-}
-.field input:focus, .field textarea:focus, .field select:focus { border-color: var(--brand); background: #FFFFFF; }
-.field textarea { resize: vertical; min-height: 95px; }
-.star-picker { display: flex; gap: 0.4rem; }
+.toast.show { transform: translateY(0); }
 
 .trustpilot-footer {
-  margin-top: 4rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
+  margin-top: 3rem;
 }
-.trustpilot-label { font-size: 0.88rem; color: var(--text-muted); font-weight: 600; }
-.trustpilot-link { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; transition: opacity 0.2s ease, transform 0.2s ease; }
-.trustpilot-link:hover { opacity: 0.85; transform: translateY(-2px); }
-.trustpilot-logo { height: 28px; width: auto; }
+.trustpilot-label { font-size: 0.85rem; color: var(--text-muted); }
+.trustpilot-logo { height: 24px; width: auto; }
