@@ -3,196 +3,175 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لوحة التحكم بالتقييمات</title>
+<title>AKZOZ STORE - لوحة التحكم</title>
 <link rel="stylesheet" href="styles.css">
 <style>
-  .admin-wrap {
-    max-width: 950px;
-    margin: 0 auto;
-    padding: 3rem 1.5rem 5rem;
-    display: none;
-  }
-  .admin-wrap.visible { display: block; }
-
-  .admin-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-  }
-
-  .panel {
-    background: var(--card-bg);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-subtle);
+  .admin-wrap { max-width: 900px; margin: 3rem auto; padding: 0 1.5rem; }
+  .admin-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+  .admin-card {
+    background: #fff;
     border: 1px solid var(--border);
-    padding: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.2rem;
-  }
-  @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
-
-  .review-row {
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    gap: 0.75rem;
   }
-  .review-row:last-child { border-bottom: none; }
-
-  .review-row .thumb {
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-
-  .gate {
-    min-height: 100vh;
+  .add-reply-box {
+    background: #F8FAFC;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin-top: 0.5rem;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
+    flex-direction: column;
+    gap: 0.6rem;
   }
-  .gate-box {
-    background: var(--card-bg);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-pop);
-    padding: 2.5rem;
-    width: 100%;
-    max-width: 380px;
-    text-align: center;
+  .add-reply-box input, .add-reply-box select {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
   }
 </style>
 </head>
 <body>
 
-<div class="gate" id="gate">
-  <div class="gate-box">
-    <h2 style="font-size:1.3rem;font-weight:800;margin:0 0 0.5rem;">دخول لوحة التحكم</h2>
-    <p style="color:var(--text-muted);font-size:0.88rem;margin:0 0 1.5rem;">أدخل رمز المرور للتحكم بالتقييمات</p>
-    <form id="gateForm">
-      <input type="password" id="passInput" placeholder="••••••••" style="text-align:center;font-size:1.1rem;margin-bottom:1rem;" required>
-      <p id="gateError" style="color:var(--danger);font-size:0.82rem;display:none;margin-bottom:0.8rem;">رمز المرور خاطئ</p>
-      <button type="submit" class="btn btn-primary" style="width:100%;">دخول</button>
-    </form>
-  </div>
-</div>
-
-<div class="admin-wrap" id="adminWrap">
-  <div class="admin-header">
-    <h1 style="font-size:1.5rem;font-weight:800;margin:0;">إدارة آراء العملاء</h1>
-    <a href="index.html" target="_blank" class="btn btn-ghost" style="padding:0.5rem 1rem;">معاينة الموقع ↗</a>
+<div class="admin-wrap">
+  <div class="admin-head">
+    <div>
+      <h1 style="margin:0;font-size:1.6rem;font-weight:800;">إدارة التقييمات - AKZOZ STORE</h1>
+      <p style="margin:0.2rem 0 0;color:var(--text-muted);font-size:0.9rem;">إضافة وإدارة الردود الرسمية وتوليد ردود الأشخاص</p>
+    </div>
   </div>
 
-  <div class="panel">
-    <h2 style="font-size:1.15rem;font-weight:800;margin:0 0 1.5rem;">إضافة تقييم جديد</h2>
-    <form id="addForm">
-      <div class="grid-2">
-        <div class="field">
-          <label>اسم العميل</label>
-          <input type="text" id="aName" required placeholder="مثال: خالد الدوسري">
-        </div>
-        <div class="field">
-          <label>رابط الصورة (اختياري)</label>
-          <input type="text" id="aAvatar" placeholder="https://...">
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="field">
-          <label>عدد النجوم</label>
-          <select id="aStars">
-            <option value="5">5 نجوم</option>
-            <option value="4">4 نجوم</option>
-            <option value="3">3 نجوم</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>التاريخ</label>
-          <input type="text" id="aDate" value="اليوم">
-        </div>
-      </div>
-
-      <div class="field">
-        <label>عنوان التقييم</label>
-        <input type="text" id="aTitle" required placeholder="عنوان مختصر">
-      </div>
-
-      <div class="field">
-        <label>نص التقييم</label>
-        <textarea id="aBody" required placeholder="نص التقييم كامل..."></textarea>
-      </div>
-
-      <button type="submit" class="btn btn-primary" style="width:100%;">نشر التقييم فوراً</button>
-    </form>
-  </div>
-
-  <div class="panel">
-    <h2 style="font-size:1.15rem;font-weight:800;margin:0 0 1rem;">التقييمات الحالية</h2>
-    <div id="reviewsList"></div>
-  </div>
+  <div id="reviewsAdminList"></div>
 </div>
 
 <script src="common.js"></script>
 <script>
-  document.getElementById('gateForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (document.getElementById('passInput').value === getAdminPass()) {
-      document.getElementById('gate').style.display = 'none';
-      document.getElementById('adminWrap').classList.add('visible');
-      renderList();
-    } else {
-      document.getElementById('gateError').style.display = 'block';
-    }
-  });
-
-  function renderList() {
+  function renderAdminList() {
     const reviews = getReviews();
-    const container = document.getElementById('reviewsList');
+    const list = document.getElementById('reviewsAdminList');
+
     if (!reviews.length) {
-      container.innerHTML = '<p style="color:var(--text-muted);text-align:center;">لا توجد تقييمات</p>';
+      list.innerHTML = '<p style="text-align:center;color:var(--text-muted);">لا توجد تقييمات حالياً.</p>';
       return;
     }
-    container.innerHTML = reviews.map(r => `
-      <div class="review-row">
-        <img class="thumb" src="${escapeHTML(r.avatar)}" alt="${escapeHTML(r.name)}">
-        <div style="flex:1;">
-          <div style="font-weight:700;font-size:0.9rem;">${escapeHTML(r.name)} (${r.stars} نجوم)</div>
-          <div style="color:var(--text-muted);font-size:0.82rem;">${escapeHTML(r.title)}</div>
+
+    list.innerHTML = reviews.map(r => `
+      <div class="admin-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <strong style="font-size:1rem;">${escapeHTML(r.name)}</strong>
+          <div>${starsSVG(r.stars, 14)}</div>
         </div>
-        <button class="btn btn-danger" onclick="removeReview('${r.id}')">حذف</button>
+        <div style="font-weight:700;font-size:0.95rem;">${escapeHTML(r.title)}</div>
+        <div style="font-size:0.9rem;color:var(--text-body);">${escapeHTML(r.body)}</div>
+
+        <!-- الردود الحالية -->
+        <div class="replies-list">
+          ${(r.replies || []).map((rp, idx) => `
+            <div class="reply-item ${rp.isAdmin ? 'admin-type' : 'user-type'}" style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div class="reply-header">
+                  ${rp.avatar ? `<img src="${escapeHTML(rp.avatar)}" alt="">` : ''}
+                  <span>${escapeHTML(rp.name)}</span>
+                </div>
+                <div>${escapeHTML(rp.text)}</div>
+              </div>
+              <button class="btn btn-danger" style="padding:0.2rem 0.5rem;font-size:0.75rem;" onclick="deleteReply(${r.id}, ${idx})">حذف الرد</button>
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- صندوق إضافة رد جديد -->
+        <div class="add-reply-box">
+          <strong style="font-size:0.85rem;">إضافة رد جديد:</strong>
+          <select id="reply-type-${r.id}" onchange="toggleCustomUserFields(${r.id})">
+            <option value="admin">رد رسمي كـ (AKZOZ STORE)</option>
+            <option value="custom">رد بصفة (شخص آخر)</option>
+          </select>
+
+          <div id="custom-fields-${r.id}" style="display:none;flex-direction:column;gap:0.5rem;">
+            <input type="text" id="custom-name-${r.id}" placeholder="اسم الشخص (مثال: محمد العمري)">
+            <input type="text" id="custom-avatar-${r.id}" placeholder="رابط صورة الشخص (إختياري URL)">
+          </div>
+
+          <input type="text" id="reply-text-${r.id}" placeholder="اكتب نص الرد هنا...">
+          <div style="display:flex;gap:0.5rem;margin-top:0.3rem;">
+            <button class="btn btn-primary" style="padding:0.4rem 1rem;font-size:0.85rem;" onclick="addReply(${r.id})">إرسال الرد</button>
+            <button class="btn btn-danger" onclick="deleteReview(${r.id})">حذف التقييم كاملاً</button>
+          </div>
+        </div>
       </div>
     `).join('');
   }
 
-  function removeReview(id) {
-    if (confirm('هل أنت متأكد من الحذف؟')) {
-      deleteReview(id);
-      renderList();
+  function toggleCustomUserFields(id) {
+    const type = document.getElementById(`reply-type-${id}`).value;
+    const fields = document.getElementById(`custom-fields-${id}`);
+    fields.style.display = type === 'custom' ? 'flex' : 'none';
+  }
+
+  function addReply(id) {
+    const type = document.getElementById(`reply-type-${id}`).value;
+    const textInput = document.getElementById(`reply-text-${id}`);
+    const text = textInput.value.trim();
+
+    if (!text) return;
+
+    const reviews = getReviews();
+    const review = reviews.find(r => r.id === id);
+    if (!review) return;
+
+    if (!review.replies) review.replies = [];
+
+    if (type === 'admin') {
+      review.replies.push({
+        id: Date.now(),
+        name: 'AKZOZ STORE',
+        avatar: '',
+        text: text,
+        isAdmin: true
+      });
+    } else {
+      const customName = document.getElementById(`custom-name-${id}`).value.trim() || 'مستخدم';
+      const customAvatar = document.getElementById(`custom-avatar-${id}`).value.trim() || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150';
+      
+      review.replies.push({
+        id: Date.now(),
+        name: customName,
+        avatar: customAvatar,
+        text: text,
+        isAdmin: false
+      });
+    }
+
+    saveReviews(reviews);
+    renderAdminList();
+  }
+
+  function deleteReply(reviewId, replyIndex) {
+    const reviews = getReviews();
+    const review = reviews.find(r => r.id === reviewId);
+    if (review && review.replies) {
+      review.replies.splice(replyIndex, 1);
+      saveReviews(reviews);
+      renderAdminList();
     }
   }
 
-  document.getElementById('addForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    addReview({
-      name: document.getElementById('aName').value.trim(),
-      avatar: document.getElementById('aAvatar').value.trim() || 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=150',
-      is_verified: true,
-      stars: Number(document.getElementById('aStars').value),
-      title: document.getElementById('aTitle').value.trim(),
-      body: document.getElementById('aBody').value.trim(),
-      date: document.getElementById('aDate').value.trim() || 'اليوم'
-    });
-    this.reset();
-    document.getElementById('aDate').value = 'اليوم';
-    renderList();
-  });
+  function deleteReview(id) {
+    if (confirm('هل أنت تأكد من حذف هذا التقييم؟')) {
+      let reviews = getReviews();
+      reviews = reviews.filter(r => r.id !== id);
+      saveReviews(reviews);
+      renderAdminList();
+    }
+  }
+
+  renderAdminList();
 </script>
 </body>
 </html>
