@@ -185,6 +185,7 @@
                 <div class="reply-header">
                   <img src="${escapeHTML(rp.avatar || DEFAULT_AVATAR)}" alt="">
                   <span>${escapeHTML(rp.name)}</span>
+                  ${rp.isAdmin ? '<span class="admin-badge">ADMIN</span>' : ''}
                 </div>
                 <div>${escapeHTML(rp.text)}</div>
               </div>
