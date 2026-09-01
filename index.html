@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AKZOZ STORE - آراء العملاء والتقييمات</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles-v1.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.1.4/swiper-bundle.min.css">
 <style>
-  .page-wrap { max-width: 1200px; margin: 0 auto; padding: 3.5rem 1.5rem 5rem; }
-  .trust-header { text-align: center; margin-bottom: 2.5rem; }
+  .page-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+  .trust-header { text-align: center; margin-bottom: 2rem; }
   .trust-header .rating-badge {
     display: inline-flex;
     align-items: center;
@@ -22,15 +22,15 @@
   }
   .trust-header h1 { font-size: 1.8rem; font-weight: 800; margin: 0 0 0.5rem; color: var(--text-dark); }
   .trust-header .subtext { color: var(--text-muted); font-size: 0.95rem; margin: 0; }
-  .section-cta { display: flex; justify-content: center; margin-bottom: 3rem; }
-  .carousel-container { position: relative; padding: 0 2.5rem; }
+  .section-cta { display: flex; justify-content: center; margin-bottom: 2.5rem; }
+  .carousel-container { position: relative; padding: 0 1rem; }
   .review-swiper { padding: 1rem 0.5rem 3.5rem; }
   .swiper-slide { height: auto !important; }
   .review-card {
     background: var(--card-bg);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-subtle);
-    padding: 1.75rem;
+    padding: 1.5rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -40,7 +40,7 @@
   }
   .review-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--brand-border); }
   .review-card .card-head { display: flex; align-items: center; gap: 0.8rem; }
-  .review-card .avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--brand-light); background: #F1F5F9; }
+  .review-card .avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--brand-light); background: #F1F5F9; }
   .review-card .who { display: flex; flex-direction: column; gap: 0.25rem; }
   .review-card .who .name { font-weight: 800; font-size: 0.98rem; }
   .review-card .stars-row { display: flex; gap: 0.15rem; }
@@ -51,14 +51,21 @@
   .swiper-button-next, .swiper-button-prev {
     color: var(--brand) !important;
     background: #FFFFFF !important;
-    width: 44px !important;
-    height: 44px !important;
+    width: 40px !important;
+    height: 40px !important;
     border-radius: 50% !important;
     box-shadow: var(--shadow-subtle) !important;
     border: 1px solid var(--border) !important;
   }
-  .swiper-button-next::after, .swiper-button-prev::after { font-size: 15px !important; font-weight: 900 !important; }
+  .swiper-button-next::after, .swiper-button-prev::after { font-size: 14px !important; font-weight: 900 !important; }
   .swiper-pagination-bullet-active { background: var(--brand) !important; width: 22px !important; border-radius: 999px !important; }
+
+  @media (max-width: 768px) {
+    .carousel-container { padding: 0; }
+    .swiper-button-next, .swiper-button-prev { display: none !important; }
+    .page-wrap { padding: 1.5rem 0.8rem 3rem; }
+    .trust-header h1 { font-size: 1.4rem; }
+  }
 </style>
 </head>
 <body>
@@ -95,7 +102,7 @@
 
   <footer class="trustpilot-footer">
     <span class="trustpilot-label">موثوق بواسطة</span>
-    <a href="https://www.trustpilot.com/review/yourdomain.com" target="_blank" rel="noopener noreferrer" class="trustpilot-link" title="Trustpilot">
+    <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" class="trustpilot-link" title="Trustpilot">
       <svg class="trustpilot-logo" viewBox="0 0 230 52" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M0 16.5H16.2L21.2 0L26.2 16.5H42.4L28.7 26.5L33.9 43L21.2 33L8.5 43L13.7 26.5L0 16.5Z" fill="#00B67A"/>
         <path d="M21.2 0L26.2 16.5H42.4L28.7 26.5L33.9 43L21.2 33V0Z" fill="#005128"/>
@@ -146,7 +153,7 @@
   <span id="toastMessage">شكراً لك! تم استلام تقييمك بنجاح.</span>
 </div>
 
-<script src="common.js"></script>
+<script src="common-v1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.1.4/swiper-bundle.min.js"></script>
 <script>
   let selectedStars = 5;
@@ -157,13 +164,18 @@
     const avg = computeAverage(reviews);
     document.getElementById('avgBadge').textContent = `${avg} من 5`;
     document.getElementById('reviewCountText').textContent = `بناءً على ${reviews.length} رأياً للعملاء المعتمدين`;
-    document.getElementById('headerStars').innerHTML = starsSVG(Math.round(avg), 18);
+    document.getElementById('headerStars').innerHTML = starsSVG(Math.round(Number(avg)), 18);
   }
 
   function renderCarousel() {
     const reviews = getReviews();
     const wrapper = document.getElementById('swiperWrapper');
-    wrapper.innerHTML = reviews.map(r => `
+    
+    wrapper.innerHTML = reviews.map(r => {
+      // إظهار ردود الأدمن فقط للعامة
+      const adminReplies = (r.replies || []).filter(rp => rp.isAdmin);
+
+      return `
       <div class="swiper-slide">
         <div class="review-card">
           <div class="card-head">
@@ -180,12 +192,12 @@
           ${r.image ? `<img src="${escapeHTML(r.image)}" class="review-attached-img" alt="صورة التقييم">` : ''}
 
           <div class="replies-list">
-            ${(r.replies || []).map(rp => `
-              <div class="reply-item ${rp.isAdmin ? 'admin-type' : 'user-type'}">
+            ${adminReplies.map(rp => `
+              <div class="reply-item admin-type">
                 <div class="reply-header">
                   <img src="${escapeHTML(rp.avatar || DEFAULT_AVATAR)}" alt="">
                   <span>${escapeHTML(rp.name)}</span>
-                  ${rp.isAdmin ? '<span class="admin-badge">ADMIN</span>' : ''}
+                  <span class="admin-badge">ADMIN</span>
                 </div>
                 <div>${escapeHTML(rp.text)}</div>
               </div>
@@ -205,13 +217,13 @@
           <div class="footer">${escapeHTML(r.date)}</div>
         </div>
       </div>
-    `).join('');
+    `}).join('');
 
     if (swiperInstance) swiperInstance.destroy(true, true);
     
     swiperInstance = new Swiper('.review-swiper', {
       slidesPerView: 1,
-      spaceBetween: 20,
+      spaceBetween: 16,
       loop: false,
       observer: true,
       observeParents: true,
@@ -231,10 +243,25 @@
 
   function sendCustomerReply(id) {
     const input = document.getElementById(`reply-input-${id}`);
-    if (!input.value.trim()) return;
-    input.value = '';
-    document.getElementById(`reply-form-${id}`).classList.remove('show');
-    showToast("تم إرسال ردك للمراجعة بنجاح.");
+    const text = input.value.trim();
+    if (!text) return;
+
+    const reviews = getReviews();
+    const review = reviews.find(r => r.id === id);
+    if (review) {
+      if (!review.replies) review.replies = [];
+      review.replies.push({
+        id: Date.now(),
+        name: "عميل",
+        avatar: DEFAULT_AVATAR,
+        text: text,
+        isAdmin: false
+      });
+      saveReviews(reviews);
+      input.value = '';
+      document.getElementById(`reply-form-${id}`).classList.remove('show');
+      showToast("تم إرسال ردك للمراجعة بنجاح.");
+    }
   }
 
   function showToast(msg) {
@@ -277,8 +304,40 @@
     if (e.target.id === 'modalOverlay') document.getElementById('modalOverlay').classList.remove('show');
   });
 
-  document.getElementById('reviewForm').addEventListener('submit', function (e) {
+  document.getElementById('reviewForm').addEventListener('submit', async function (e) {
     e.preventDefault();
+    const name = document.getElementById('fName').value.trim();
+    const title = document.getElementById('fTitle').value.trim();
+    const body = document.getElementById('fBody').value.trim();
+    const fileInput = document.getElementById('fImage').files[0];
+
+    let image = null;
+    if (fileInput) {
+      try {
+        image = await compressAndGetBase64(fileInput);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    const reviews = getReviews();
+    reviews.unshift({
+      id: Date.now(),
+      name,
+      stars: selectedStars,
+      title,
+      body,
+      image,
+      date: new Date().toISOString().split('T')[0],
+      is_verified: false,
+      avatar: DEFAULT_AVATAR,
+      replies: []
+    });
+
+    saveReviews(reviews);
+    renderHeader();
+    renderCarousel();
+
     this.reset();
     document.getElementById('modalOverlay').classList.remove('show');
     showToast("شكراً لك! تم استلام تقييمك بنجاح.");
