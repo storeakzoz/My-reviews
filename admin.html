@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKZOZ STORE - لوحة التحكم</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .admin-wrap { max-width: 900px; margin: 3rem auto; padding: 0 1.5rem; }
+  .admin-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+  .add-review-section {
+    background: #fff;
+    border: 1.5px solid var(--brand-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow-subtle);
+  }
+  .admin-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .add-reply-box {
+    background: #F8FAFC;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .add-reply-box input, .add-reply-box select, .add-review-section input, .add-review-section textarea, .add-review-section select {
+    padding: 0.65rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-size: 0.88rem;
+    outline: none;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
+
+  .admin-wrap { display: none; }
+  .admin-wrap.visible { display: block; }
+
+  .gate {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .gate-box {
+    background: #fff;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-hover);
+    padding: 2.25rem;
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+  }
+  .gate-box .icon {
+    width: 56px; height: 56px;
+    background: var(--brand-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.2rem;
+  }
+  .gate-box h2 { font-size: 1.15rem; font-weight: 800; margin: 0 0 0.4rem; }
+  .gate-box p { color: var(--text-muted); font-size: 0.85rem; margin: 0 0 1.5rem; }
+  .gate-box input {
+    text-align: center;
+    letter-spacing: 0.15em;
+    padding: 0.85rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    margin-bottom: 0.9rem;
+    background: #F8FAFC;
+    outline: none;
+  }
+  .gate-box input:focus { border-color: var(--brand); background: #fff; }
+  .gate-error {
+    color: #DC2626;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 0.9rem;
+    display: none;
+  }
+  .gate-error.show { display: block; }
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gate-box">
+    <div class="icon">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="11" width="14" height="9" rx="2" stroke="#4E9FE5" stroke-width="2"/>
+        <path d="M8 11V7a4 4 0 018 0v4" stroke="#4E9FE5" stroke-width="2"/>
+      </svg>
+    </div>
+    <h2>دخول لوحة الإدارة</h2>
+    <p>أدخل رمز الدخول للمتابعة</p>
+    <form id="gateForm">
+      <input type="password" id="passInput" placeholder="••••••••" autocomplete="off" required>
+      <p class="gate-error" id="gateError">رمز الدخول غير صحيح، حاول مرة أخرى.</p>
+      <button type="submit" class="btn btn-primary" style="width:100%;">دخول</button>
+    </form>
+  </div>
+</div>
+
+<div class="admin-wrap" id="adminWrap">
+  <div class="admin-head">
+    <div>
+      <h1 style="margin:0;font-size:1.6rem;font-weight:800;">إدارة التقييمات - AKZOZ STORE</h1>
+      <p style="margin:0.2rem 0 0;color:var(--text-muted);font-size:0.9rem;">إضافة تقييمات جديدة، إرفاق صور، الرد عليها وإدارتها</p>
+    </div>
+    <a href="index.html" target="_blank" style="font-size:0.85rem;font-weight:700;color:var(--brand);">عرض الصفحة العامة ↗</a>
+  </div>
+
+  <div class="add-review-section">
+    <h3 style="margin:0 0 1rem;font-size:1.1rem;font-weight:800;color:var(--brand-dark);">إضافة تقييم جديد للمتجر</h3>
+    <form id="adminNewReviewForm" style="display:flex;flex-direction:column;gap:1rem;">
+      <div class="form-grid">
+        <input type="text" id="newRevName" placeholder="اسم الزبون (مثال: علي الحسان)" required>
+        <input type="text" id="newRevAvatar" placeholder="رابط صورة الزبون (اختياري URL)">
+      </div>
+      <div class="form-grid">
+        <input type="text" id="newRevTitle" placeholder="عنوان التقييم" required>
+        <select id="newRevStars">
+          <option value="5">5 نجوم</option>
+          <option value="4">4 نجوم</option>
+          <option value="3">3 نجوم</option>
+          <option value="2">نجتان</option>
+          <option value="1">نجمة واحدة</option>
+        </select>
+      </div>
+      <div class="form-grid">
+        <input type="text" id="newRevImage" placeholder="رابط صورة المرفق مع التقييم (اختياري URL)">
+        <input type="file" id="newRevFile" accept="image/*">
+      </div>
+      <textarea id="newRevBody" placeholder="نص التقييم..." required rows="3"></textarea>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <label style="font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:0.4rem;cursor:pointer;">
+          <input type="checkbox" id="newRevVerified" checked style="width:auto;"> مشتري موثوق
+        </label>
+        <button type="submit" class="btn btn-primary" style="padding:0.6rem 1.4rem;">إضافة التقييم</button>
+      </div>
+    </form>
+  </div>
+
+  <h3 style="margin:0 0 1rem;font-size:1.1rem;font-weight:800;">التقييمات الحالية والردود</h3>
+  <div id="reviewsAdminList"></div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  document.getElementById('gateForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const input = document.getElementById('passInput').value;
+    const errorEl = document.getElementById('gateError');
+    if (input === getAdminPass()) {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('adminWrap').classList.add('visible');
+      renderAdminList();
+    } else {
+      errorEl.classList.add('show');
+      document.getElementById('passInput').value = '';
+      document.getElementById('passInput').focus();
+    }
+  });
+
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  function renderAdminList() {
+    const reviews = getReviews();
+    const list = document.getElementById('reviewsAdminList');
+
+    if (!reviews.length) {
+      list.innerHTML = '<p style="text-align:center;color:var(--text-muted);">لا توجد تقييمات حالياً.</p>';
+      return;
+    }
+
+    list.innerHTML = reviews.map(r => `
+      <div class="admin-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <strong style="font-size:1rem;">${escapeHTML(r.name)}</strong>
+            ${r.is_verified ? checkmarkBadge() : ''}
+          </div>
+          <div>${starsSVG(r.stars, 14)}</div>
+        </div>
+        <div style="font-weight:700;font-size:0.95rem;">${escapeHTML(r.title)}</div>
+        <div style="font-size:0.9rem;color:var(--text-body);">${escapeHTML(r.body)}</div>
+
+        ${r.image ? `<img src="${escapeHTML(r.image)}" class="review-attached-img" style="max-height:120px;width:auto;max-width:200px;" alt="الصورة المرفقة">` : ''}
+
+        <div class="replies-list">
+          ${(r.replies || []).map((rp, idx) => `
+            <div class="reply-item ${rp.isAdmin ? 'admin-type' : 'user-type'}" style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div class="reply-header">
+                  <img src="${escapeHTML(rp.avatar || DEFAULT_AVATAR)}" alt="">
+                  <span>${escapeHTML(rp.name)}</span>
+                  ${rp.isAdmin ? '<span class="admin-badge">ADMIN</span>' : ''}
+                </div>
+                <div>${escapeHTML(rp.text)}</div>
+              </div>
+              <button class="btn btn-danger" style="padding:0.2rem 0.5rem;font-size:0.75rem;" onclick="deleteReply(${r.id}, ${idx})">حذف الرد</button>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="add-reply-box">
+          <strong style="font-size:0.85rem;">إضافة رد على هذا التقييم:</strong>
+          <select id="reply-type-${r.id}" onchange="toggleCustomUserFields(${r.id})">
+            <option value="admin">رد رسمي كـ (AKZOZ STORE)</option>
+            <option value="custom">رد بصفة (شخص آخر)</option>
+          </select>
+
+          <div id="custom-fields-${r.id}" style="display:none;flex-direction:column;gap:0.5rem;">
+            <input type="text" id="custom-name-${r.id}" placeholder="اسم الشخص (مثال: محمد العمري)">
+            <input type="text" id="custom-avatar-${r.id}" placeholder="رابط صورة الشخص (إختياري URL)">
+          </div>
+
+          <input type="text" id="reply-text-${r.id}" placeholder="اكتب نص الرد هنا...">
+          <div style="display:flex;gap:0.5rem;margin-top:0.3rem;">
+            <button class="btn btn-primary" style="padding:0.4rem 1rem;font-size:0.85rem;" onclick="addReply(${r.id})">إرسال الرد</button>
+            <button class="btn btn-danger" onclick="deleteReview(${r.id})">حذف التقييم كاملاً</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('adminNewReviewForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const name = document.getElementById('newRevName').value.trim();
+    const avatar = document.getElementById('newRevAvatar').value.trim() || DEFAULT_AVATAR;
+    const title = document.getElementById('newRevTitle').value.trim();
+    const stars = parseInt(document.getElementById('newRevStars').value, 10);
+    const body = document.getElementById('newRevBody').value.trim();
+    const is_verified = document.getElementById('newRevVerified').checked;
+    
+    let imageUrl = document.getElementById('newRevImage').value.trim() || null;
+    const fileInput = document.getElementById('newRevFile').files[0];
+    
+    if (fileInput) {
+      imageUrl = await getBase64(fileInput);
+    }
+
+    const reviews = getReviews();
+    const newReview = {
+      id: Date.now(),
+      name,
+      avatar,
+      title,
+      stars,
+      body,
+      image: imageUrl,
+      date: new Date().toISOString().split('T')[0],
+      is_verified,
+      replies: []
+    };
+
+    reviews.unshift(newReview);
+    saveReviews(reviews);
+    this.reset();
+    document.getElementById('newRevVerified').checked = true;
+    renderAdminList();
+  });
+
+  function toggleCustomUserFields(id) {
+    const type = document.getElementById(`reply-type-${id}`).value;
+    const fields = document.getElementById(`custom-fields-${id}`);
+    fields.style.display = type === 'custom' ? 'flex' : 'none';
+  }
+
+  function addReply(id) {
+    const type = document.getElementById(`reply-type-${id}`).value;
+    const textInput = document.getElementById(`reply-text-${id}`);
+    const text = textInput.value.trim();
+
+    if (!text) return;
+
+    const reviews = getReviews();
+    const review = reviews.find(r => r.id === id);
+    if (!review) return;
+
+    if (!review.replies) review.replies = [];
+
+    if (type === 'admin') {
+      review.replies.push({
+        id: Date.now(),
+        name: 'AKZOZ STORE',
+        avatar: '',
+        text: text,
+        isAdmin: true
+      });
+    } else {
+      const customName = document.getElementById(`custom-name-${id}`).value.trim() || 'مستخدم';
+      const customAvatar = document.getElementById(`custom-avatar-${id}`).value.trim() || DEFAULT_AVATAR;
+      
+      review.replies.push({
+        id: Date.now(),
+        name: customName,
+        avatar: customAvatar,
+        text: text,
+        isAdmin: false
+      });
+    }
+
+    saveReviews(reviews);
+    renderAdminList();
+  }
+
+  function deleteReply(reviewId, replyIndex) {
+    const reviews = getReviews();
+    const review = reviews.find(r => r.id === reviewId);
+    if (review && review.replies) {
+      review.replies.splice(replyIndex, 1);
+      saveReviews(reviews);
+      renderAdminList();
+    }
+  }
+
+  function deleteReview(id) {
+    if (confirm('هل أنت تأكد من حذف هذا التقييم؟')) {
+      let reviews = getReviews();
+      reviews = reviews.filter(r => r.id !== id);
+      saveReviews(reviews);
+      renderAdminList();
+    }
+  }
+</script>
+</body>
+</html>
