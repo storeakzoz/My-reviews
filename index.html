@@ -4,39 +4,50 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AKZOZ STORE - آراء العملاء والتقييمات</title>
-<link rel="stylesheet" href="styles-v1.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.1.4/swiper-bundle.min.css">
 <style>
+  :root {
+    --brand: #4E9FE5;
+    --brand-dark: #2563EB;
+    --brand-light: #EFF6FF;
+    --brand-border: #BFDBFE;
+    --card-bg: #FFFFFF;
+    --text-dark: #0F172A;
+    --text-body: #334155;
+    --text-muted: #64748B;
+    --border: #E2E8F0;
+    --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+  }
+
+  * { box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+  body { background-color: #F8FAFC; color: var(--text-body); margin: 0; padding: 0; direction: rtl; }
+
   .page-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+  .store-brand-title { font-size: 1.2rem; font-weight: 900; color: var(--brand-dark); letter-spacing: 1px; margin-bottom: 0.5rem; }
+  
   .trust-header { text-align: center; margin-bottom: 2rem; }
   .trust-header .rating-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: #FFFFFF;
-    padding: 0.4rem 1.2rem;
-    border-radius: 999px;
-    box-shadow: var(--shadow-subtle);
-    border: 1px solid var(--border);
-    margin-bottom: 1rem;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: #FFFFFF; padding: 0.4rem 1.2rem; border-radius: 999px;
+    box-shadow: var(--shadow-subtle); border: 1px solid var(--border); margin-bottom: 1rem;
   }
   .trust-header h1 { font-size: 1.8rem; font-weight: 800; margin: 0 0 0.5rem; color: var(--text-dark); }
   .trust-header .subtext { color: var(--text-muted); font-size: 0.95rem; margin: 0; }
+  
   .section-cta { display: flex; justify-content: center; margin-bottom: 2.5rem; }
+  
   .carousel-container { position: relative; padding: 0 1rem; }
   .review-swiper { padding: 1rem 0.5rem 3.5rem; }
-  .swiper-slide { height: auto !important; }
+  
   .review-card {
-    background: var(--card-bg);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-subtle);
-    padding: 1.5rem;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    border: 1px solid var(--border);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: var(--card-bg); border-radius: var(--radius-xl); box-shadow: var(--shadow-subtle);
+    padding: 1.5rem; height: 100%; display: flex; flex-direction: column; gap: 0.8rem;
+    border: 1px solid var(--border); transition: transform 0.25s ease;
   }
   .review-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--brand-border); }
   .review-card .card-head { display: flex; align-items: center; gap: 0.8rem; }
@@ -47,31 +58,49 @@
   .review-card .title { font-weight: 800; font-size: 1.05rem; color: var(--text-dark); }
   .review-card .body { color: var(--text-body); font-size: 0.92rem; line-height: 1.75; flex: 1; }
   .review-card .footer { color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border); padding-top: 0.8rem; }
-  
-  .swiper-button-next, .swiper-button-prev {
-    color: var(--brand) !important;
-    background: #FFFFFF !important;
-    width: 40px !important;
-    height: 40px !important;
-    border-radius: 50% !important;
-    box-shadow: var(--shadow-subtle) !important;
-    border: 1px solid var(--border) !important;
+
+  .verified-badge {
+    display: inline-flex; align-items: center; gap: 0.2rem; font-size: 0.75rem;
+    color: #059669; background: #ECFDF5; padding: 0.15rem 0.4rem; border-radius: 4px; font-weight: 700;
   }
+  .admin-badge {
+    display: inline-flex; align-items: center; background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 4px; margin-right: 0.4rem;
+  }
+
+  .replies-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; max-height: 200px; overflow-y: auto; }
+  .reply-item { padding: 0.6rem 0.8rem; border-radius: var(--radius-md); font-size: 0.85rem; }
+  .reply-item.admin-type { background: var(--brand-light); border-right: 3px solid var(--brand-dark); }
+  .reply-header { display: flex; align-items: center; gap: 0.4rem; font-weight: 700; margin-bottom: 0.2rem; font-size: 0.8rem; }
+  .reply-header img { width: 20px; height: 20px; border-radius: 50%; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.5rem; font-weight: 700; border-radius: var(--radius-lg); border: none; cursor: pointer; font-size: 0.95rem; }
+  .btn-primary { background: var(--brand); color: #fff; }
+  .btn-ghost { background: transparent; color: var(--text-muted); }
+
+  .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
+  .modal-overlay.show { display: flex; }
+  .modal-box { background: #fff; border-radius: var(--radius-xl); width: 100%; max-width: 480px; padding: 1.75rem; }
+  .field { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+  .field label { font-size: 0.85rem; font-weight: 700; }
+  .field input, .field textarea { padding: 0.65rem; border: 1px solid var(--border); border-radius: var(--radius-md); outline: none; }
+
+  .swiper-button-next, .swiper-button-prev { color: var(--brand) !important; background: #FFFFFF !important; width: 40px !important; height: 40px !important; border-radius: 50% !important; box-shadow: var(--shadow-subtle) !important; border: 1px solid var(--border) !important; }
   .swiper-button-next::after, .swiper-button-prev::after { font-size: 14px !important; font-weight: 900 !important; }
-  .swiper-pagination-bullet-active { background: var(--brand) !important; width: 22px !important; border-radius: 999px !important; }
+
+  /* ضبط حجم شعار Trustpilot */
+  .trustpilot-footer { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 3rem; }
+  .trustpilot-label { font-size: 0.85rem; color: var(--text-muted); }
+  .trustpilot-logo { height: 24px; width: auto; max-width: 120px; }
 
   @media (max-width: 768px) {
-    .carousel-container { padding: 0; }
     .swiper-button-next, .swiper-button-prev { display: none !important; }
-    .page-wrap { padding: 1.5rem 0.8rem 3rem; }
-    .trust-header h1 { font-size: 1.4rem; }
   }
 </style>
 </head>
 <body>
 
 <div class="page-wrap">
-
   <header class="trust-header">
     <div class="store-brand-title">AKZOZ STORE</div>
     <div class="rating-badge">
@@ -83,12 +112,7 @@
   </header>
 
   <div class="section-cta">
-    <button class="btn btn-primary" id="openModalBtn">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 5v14M5 12h14" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-      </svg>
-      اكتب تقييمك الآن
-    </button>
+    <button class="btn btn-primary" id="openModalBtn">اكتب تقييمك الآن</button>
   </div>
 
   <div class="carousel-container">
@@ -102,15 +126,12 @@
 
   <footer class="trustpilot-footer">
     <span class="trustpilot-label">موثوق بواسطة</span>
-    <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" class="trustpilot-link" title="Trustpilot">
-      <svg class="trustpilot-logo" viewBox="0 0 230 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 16.5H16.2L21.2 0L26.2 16.5H42.4L28.7 26.5L33.9 43L21.2 33L8.5 43L13.7 26.5L0 16.5Z" fill="#00B67A"/>
-        <path d="M21.2 0L26.2 16.5H42.4L28.7 26.5L33.9 43L21.2 33V0Z" fill="#005128"/>
-        <text x="50" y="36" font-family="'Cairo', sans-serif" font-weight="800" font-size="30" fill="#0F172A">Trustpilot</text>
-      </svg>
-    </a>
+    <svg class="trustpilot-logo" viewBox="0 0 230 52" fill="none">
+      <path d="M0 16.5H16.2L21.2 0L26.2 16.5H42.4L28.7 26.5L33.9 43L21.2 33L8.5 43L13.7 26.5L0 16.5Z" fill="#00B67A"/>
+      <path d="M21.2 0L26.2 16.5H42.4L28.7 26.5L33.9 43L21.2 33V0Z" fill="#005128"/>
+      <text x="50" y="36" font-family="'Cairo', sans-serif" font-weight="800" font-size="30" fill="#0F172A">Trustpilot</text>
+    </svg>
   </footer>
-
 </div>
 
 <div class="modal-overlay" id="modalOverlay">
@@ -119,23 +140,15 @@
     <form id="reviewForm">
       <div class="field">
         <label for="fName">الاسم الكامل</label>
-        <input type="text" id="fName" required placeholder="مثال: عبدالله الغامدي">
-      </div>
-      <div class="field">
-        <label>التقييم بالنجوم</label>
-        <div class="star-picker" id="starPicker"></div>
+        <input type="text" id="fName" required>
       </div>
       <div class="field">
         <label for="fTitle">عنوان التقييم</label>
-        <input type="text" id="fTitle" required placeholder="عنوان يختصر تجربتك">
+        <input type="text" id="fTitle" required>
       </div>
       <div class="field">
         <label for="fBody">تفاصيل التقييم</label>
-        <textarea id="fBody" required placeholder="اكتب رأيك بالتفصيل هنا..."></textarea>
-      </div>
-      <div class="field">
-        <label for="fImage">إرفاق صورة للمنتج (اختياري)</label>
-        <input type="file" id="fImage" accept="image/*">
+        <textarea id="fBody" required></textarea>
       </div>
       <div style="display:flex;gap:0.75rem;margin-top:1.5rem;">
         <button type="submit" class="btn btn-primary" style="flex:1;">إرسال التقييم</button>
@@ -145,18 +158,9 @@
   </div>
 </div>
 
-<div class="toast" id="toast">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="10" fill="#4E9FE5"/>
-    <path d="M8 12l3 3 5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-  <span id="toastMessage">شكراً لك! تم استلام تقييمك بنجاح.</span>
-</div>
-
 <script src="common-v1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.1.4/swiper-bundle.min.js"></script>
 <script>
-  let selectedStars = 5;
   let swiperInstance = null;
 
   function renderHeader() {
@@ -172,14 +176,12 @@
     const wrapper = document.getElementById('swiperWrapper');
     
     wrapper.innerHTML = reviews.map(r => {
-      // إظهار ردود الأدمن فقط للعامة
       const adminReplies = (r.replies || []).filter(rp => rp.isAdmin);
-
       return `
       <div class="swiper-slide">
         <div class="review-card">
           <div class="card-head">
-            <img class="avatar" src="${escapeHTML(r.avatar || DEFAULT_AVATAR)}" alt="${escapeHTML(r.name)}">
+            <img class="avatar" src="${escapeHTML(r.avatar || DEFAULT_AVATAR)}" alt="">
             <div class="who">
               <span class="name">${escapeHTML(r.name)}</span>
               ${r.is_verified ? checkmarkBadge() : ''}
@@ -188,14 +190,10 @@
           <div class="stars-row">${starsSVG(r.stars, 16)}</div>
           <div class="title">${escapeHTML(r.title)}</div>
           <div class="body">${escapeHTML(r.body)}</div>
-
-          ${r.image ? `<img src="${escapeHTML(r.image)}" class="review-attached-img" alt="صورة التقييم">` : ''}
-
           <div class="replies-list">
             ${adminReplies.map(rp => `
               <div class="reply-item admin-type">
                 <div class="reply-header">
-                  <img src="${escapeHTML(rp.avatar || DEFAULT_AVATAR)}" alt="">
                   <span>${escapeHTML(rp.name)}</span>
                   <span class="admin-badge">ADMIN</span>
                 </div>
@@ -203,17 +201,6 @@
               </div>
             `).join('')}
           </div>
-
-          <button class="reply-btn" onclick="toggleCustomerReply(${r.id})">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-            رد
-          </button>
-          
-          <div class="customer-reply-form" id="reply-form-${r.id}">
-            <input type="text" placeholder="اكتب ردك..." id="reply-input-${r.id}">
-            <button class="btn btn-primary" style="padding:0.35rem 0.75rem; font-size:0.8rem; align-self: flex-start;" onclick="sendCustomerReply(${r.id})">إرسال الرد</button>
-          </div>
-
           <div class="footer">${escapeHTML(r.date)}</div>
         </div>
       </div>
@@ -224,9 +211,6 @@
     swiperInstance = new Swiper('.review-swiper', {
       slidesPerView: 1,
       spaceBetween: 16,
-      loop: false,
-      observer: true,
-      observeParents: true,
       pagination: { el: '.swiper-pagination', clickable: true },
       navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
       breakpoints: {
@@ -236,118 +220,12 @@
     });
   }
 
-  function toggleCustomerReply(id) {
-    const el = document.getElementById(`reply-form-${id}`);
-    if (el) el.classList.toggle('show');
-  }
-
-  function sendCustomerReply(id) {
-    const input = document.getElementById(`reply-input-${id}`);
-    const text = input.value.trim();
-    if (!text) return;
-
-    const reviews = getReviews();
-    const review = reviews.find(r => r.id === id);
-    if (review) {
-      if (!review.replies) review.replies = [];
-      review.replies.push({
-        id: Date.now(),
-        name: "عميل",
-        avatar: DEFAULT_AVATAR,
-        text: text,
-        isAdmin: false
-      });
-      saveReviews(reviews);
-      input.value = '';
-      document.getElementById(`reply-form-${id}`).classList.remove('show');
-      showToast("تم إرسال ردك للمراجعة بنجاح.");
-    }
-  }
-
-  function showToast(msg) {
-    const toast = document.getElementById('toast');
-    document.getElementById('toastMessage').textContent = msg;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3500);
-  }
-
-  function renderStarPicker() {
-    const picker = document.getElementById('starPicker');
-    function draw() {
-      picker.innerHTML = '';
-      for (let i = 1; i <= 5; i++) {
-        const filled = i <= selectedStars;
-        const wrapper = document.createElement('span');
-        wrapper.style.cursor = 'pointer';
-        wrapper.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="${filled ? '#4E9FE5' : '#E2E8F0'}" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
-        </svg>`;
-        wrapper.addEventListener('click', () => { selectedStars = i; draw(); });
-        picker.appendChild(wrapper);
-      }
-    }
-    draw();
-  }
-
   document.getElementById('openModalBtn').addEventListener('click', () => {
-    selectedStars = 5;
-    renderStarPicker();
-    document.getElementById('reviewForm').reset();
     document.getElementById('modalOverlay').classList.add('show');
   });
 
   document.getElementById('closeModalBtn').addEventListener('click', () => {
     document.getElementById('modalOverlay').classList.remove('show');
-  });
-
-  document.getElementById('modalOverlay').addEventListener('click', (e) => {
-    if (e.target.id === 'modalOverlay') document.getElementById('modalOverlay').classList.remove('show');
-  });
-
-  document.getElementById('reviewForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const name = document.getElementById('fName').value.trim();
-    const title = document.getElementById('fTitle').value.trim();
-    const body = document.getElementById('fBody').value.trim();
-    const fileInput = document.getElementById('fImage').files[0];
-
-    let image = null;
-    if (fileInput) {
-      try {
-        image = await compressAndGetBase64(fileInput);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    const reviews = getReviews();
-    reviews.unshift({
-      id: Date.now(),
-      name,
-      stars: selectedStars,
-      title,
-      body,
-      image,
-      date: new Date().toISOString().split('T')[0],
-      is_verified: false,
-      avatar: DEFAULT_AVATAR,
-      replies: []
-    });
-
-    saveReviews(reviews);
-    renderHeader();
-    renderCarousel();
-
-    this.reset();
-    document.getElementById('modalOverlay').classList.remove('show');
-    showToast("شكراً لك! تم استلام تقييمك بنجاح.");
-  });
-
-  window.addEventListener('storage', (e) => {
-    if (e.key === STORAGE_KEY) {
-      renderHeader();
-      renderCarousel();
-    }
   });
 
   renderHeader();
