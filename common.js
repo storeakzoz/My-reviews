@@ -9,7 +9,7 @@ const initialReviews = [
     stars: 5,
     title: "تجربة ممتازة جداً",
     body: "الخدمة كانت سريعة والمنتج بجودة عالية، ننصح بالتعامل معهم.",
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500",
+    image: null,
     date: "2026-08-15",
     is_verified: true,
     avatar: DEFAULT_AVATAR,
@@ -38,28 +38,39 @@ const initialReviews = [
 ];
 
 function getReviews() {
-  const data = localStorage.getItem(STORAGE_KEY);
-  if (!data) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(initialReviews));
+  try {
+    const data = localStorage.getItem(STORAGE_KEY);
+    if (!data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(initialReviews));
+      return initialReviews;
+    }
+    return JSON.parse(data);
+  } catch (e) {
     return initialReviews;
   }
-  return JSON.parse(data);
 }
 
 function saveReviews(reviews) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+  } catch (e) {
+    alert("مساحة التخزين التلقائي ممتلئة.");
+  }
 }
 
 function computeAverage(reviews) {
-  if (!reviews.length) return 0;
-  const sum = reviews.reduce((acc, r) => acc + r.stars, 0);
+  if (!reviews || !reviews.length) return "0.0";
+  const sum = reviews.reduce((acc, r) => acc + Number(r.stars || 0), 0);
   return (sum / reviews.length).toFixed(1);
 }
 
 function escapeHTML(str) {
-  return String(str || '').replace(/[&<>'"]/g, 
-    tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-  );
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 function starsSVG(count, size = 16) {
@@ -73,4 +84,33 @@ function starsSVG(count, size = 16) {
 
 function checkmarkBadge() {
   return `<span class="verified-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>مشتري موثوق</span>`;
+}
+
+function compressAndGetBase64(file, maxWidth = 600) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', 0.7));
+      };
+      img.onerror = error => reject(error);
+    };
+    reader.onerror = error => reject(error);
+  });
 }
